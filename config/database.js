@@ -15,4 +15,15 @@ module.exports.connect = async () => {
   }
 };
 
-module.exports.disconnect = mongoose.disconnect;
+module.exports.connection = mongoose.connection;
+
+module.exports.disconnect = async () => {
+  try {
+    console.log("Disconnecting from db...");
+    await mongoose.disconnect();
+    console.log("Disconnected successfully.");
+  } catch (err) {
+    console.error("Failed to disconnect cleanly", err);
+    throw err; // Maintain consistency in error handling
+  }
+};
