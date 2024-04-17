@@ -1,9 +1,6 @@
 require("dotenv").config();
 const db = require("../config/database");
 
-const User = require("../models/user");
-const Message = require("../models/message");
-
 async function main() {
   try {
     await db.connect();
