@@ -161,3 +161,9 @@ exports.userLoginPost = [
     res.redirect("/");
   }),
 ];
+
+// LOG OUT
+exports.userLogoutGet = asyncHandler((req, res, next) => {
+  res.cookie("token", "", { expires: new Date(0) });
+  res.redirect("/");
+});
