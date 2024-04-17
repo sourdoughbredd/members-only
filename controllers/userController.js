@@ -1,7 +1,14 @@
+require("dotenv").config();
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+
+const JWT_PRIVATE_KEY = Buffer.from(
+  process.env.JWT_PRIVATE_KEY_BASE64,
+  "base64"
+).toString("ascii");
 
 // SIGN UP
 
@@ -68,7 +75,7 @@ exports.userCreatePost = [
 
     // All checks passed, create user
     await user.save();
-    res.redirect("/");
+    res.redirect("/users/login");
   }),
 ];
 
@@ -137,6 +144,20 @@ exports.userLoginPost = [
       return;
     }
 
-    res.send("Authentication passed!");
+    // All checks passed! Generate JWT and save to cookies
+    const payload = { sub: user.id };
+    const token = jwt.sign(payload, JWT_PRIVATE_KEY, {
+      algorithm: "RS256",
+      expiresIn: "1d",
+    });
+    res.cookie("token", token, {
+      httpOnly: true, // The cookie is not accessible via JavaScript (XSS protection)
+      secure: process.env.NODE_ENV !== "development", // The cookie is sent over HTTPS only
+      sameSite: "strict", // The cookie is not sent with cross-site requests (CSRF protection)
+      maxAge: 24 * 60 * 60 * 1000, // Expires in 1 day
+    });
+
+    // Redirect to home page
+    res.redirect("/");
   }),
 ];
