@@ -4,5 +4,20 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  color: #00b7ff;
+}
+
+header {
+  display: flex;
+  align-items: center;
+}
+
+header div {
+  flex: 1;
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 24px;
 }
