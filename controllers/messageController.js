@@ -47,3 +47,12 @@ exports.messageCreatePost = [
     res.redirect("/");
   }),
 ];
+
+// Delete message
+exports.messageDeletePost = [
+  permissions.isAdmin,
+  asyncHandler(async (req, res, next) => {
+    await Message.findByIdAndDelete(req.params.id);
+    res.redirect("/");
+  }),
+];
