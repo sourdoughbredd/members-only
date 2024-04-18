@@ -4,6 +4,7 @@ const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+const rateLimiters = require("../middleware/rateLimiters");
 
 const JWT_PRIVATE_KEY = Buffer.from(
   process.env.JWT_PRIVATE_KEY_BASE64,
@@ -17,6 +18,7 @@ exports.userCreateGet = asyncHandler(async (req, res, next) => {
 });
 
 exports.userCreatePost = [
+  rateLimiters.createUserDailyLimiter,
   // Validate and sanitize
   body("firstName").trim(),
   body("lastName").trim(),
@@ -199,6 +201,7 @@ exports.userMembershipPost = [
 exports.userAdminGet = asyncHandler(async (req, res, next) => {
   res.render("admin-form", {});
 });
+
 exports.userAdminPost = [
   body("key")
     .trim()

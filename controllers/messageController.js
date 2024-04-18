@@ -1,9 +1,9 @@
 const asyncHandler = require("express-async-handler");
 const permissions = require("../middleware/permissions");
 const { body, validationResult } = require("express-validator");
+const rateLimiters = require("../middleware/rateLimiters");
 
 const Message = require("../models/message");
-const User = require("../models/user");
 
 // Display Message Board
 exports.messageBoardGet = asyncHandler(async (req, res, next) => {
@@ -25,6 +25,8 @@ exports.messageCreateGet = [
 
 exports.messageCreatePost = [
   permissions.isLoggedIn,
+  rateLimiters.postMessageMinuteLimiter,
+  rateLimiters.postMessageDailyLimiter,
   body("title", "Title is required").trim().notEmpty(),
   body("text", "Message is required").trim().notEmpty(),
   asyncHandler(async (req, res, next) => {
