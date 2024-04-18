@@ -23,4 +23,8 @@ router.get("/logout", userController.userLogoutGet);
 router.get("/membership", userController.userMembershipGet);
 router.post("/membership", userController.userMembershipPost);
 
+// Admin Route
+router.get("/admin", userController.userAdminGet);
+router.post("/admin", userController.userAdminPost);
+
 module.exports = router;
