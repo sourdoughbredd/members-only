@@ -1,16 +1,20 @@
 extends layout 
 
 block content 
+  h2 Welcome#{currentUser ? `, ${currentUser.firstName}!` : ""}
   ul 
     each message in messages 
-      div
+      div.message-group
         h3 #{message.title}
         p #{message.text}
 
         if currentUser && currentUser.isMember
-          p #[strong Posted by:] #{message.user.fullName}
+          p #[strong Posted by] #{message.user.fullName}
+            | &nbsp;#[strong on] #{message.timestamp.toLocaleString('en-us', {timeZoneName : "short"})}
         else
-          p #[strong Posted by:] Become a member to see the author's name!
-
-        p #[strong Timestamp:] #{message.timestamp}
+          p #[strong Posted by:] Become a member to see the author and timestamp!
         
+        if currentUser && currentUser.isAdmin
+          form(action=`/messages/${message._id}/delete` method="POST")
+            div.form-group 
+              button(type="submit") Delete
