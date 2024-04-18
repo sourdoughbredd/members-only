@@ -8,12 +8,6 @@ const UserSchema = new Schema({
   email: { type: String, required: true, maxLength: 320 },
   password: { type: String, required: true },
   isMember: { type: Boolean, required: true, default: false },
-  messages: {
-    type: [Schema.Types.ObjectId],
-    ref: "Message",
-    required: true,
-    default: [],
-  },
 });
 
 UserSchema.virtual("fullName").get(function () {
