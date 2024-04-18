@@ -19,4 +19,8 @@ router.post("/login", userController.userLoginPost);
 // Log out route
 router.get("/logout", userController.userLogoutGet);
 
+// Membership Route
+router.get("/membership", userController.userMembershipGet);
+router.post("/membership", userController.userMembershipPost);
+
 module.exports = router;
