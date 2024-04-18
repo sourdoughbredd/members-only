@@ -18,6 +18,12 @@ html
           else
             li
               a(href="/messages/create") Post New Message
+            if !currentUser.isMember
+              li
+                a(href="/users/membership") Become a Member
+            else if !currentUser.isAdmin
+              li 
+                a(href="/users/admin") Become an Admin    
             li
               a(href="/users/logout") Log Out
     block content
