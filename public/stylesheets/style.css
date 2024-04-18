@@ -7,6 +7,32 @@ a {
   color: #00b7ff;
 }
 
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 500px;
+}
+
+form button {
+  max-width: 100px;
+}
+
+.message-group {
+  border: 2px solid gray;
+  border-radius: 12px;
+  padding: 12px 24px;
+  margin-bottom: 12px;
+}
+
+.message-group p:last-child {
+  margin-top: 40px;
+}
+
+textarea {
+  resize: vertical;
+}
+
 header {
   display: flex;
   align-items: center;
