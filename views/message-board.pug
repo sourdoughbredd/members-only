@@ -1,0 +1,16 @@
+extends layout 
+
+block content 
+  ul 
+    each message in messages 
+      div
+        h3 #{message.title}
+        p #{message.text}
+
+        if currentUser && currentUser.isMember
+          p #[strong Posted by:] #{message.user.fullName}
+        else
+          p #[strong Posted by:] Become a member to see the author's name!
+
+        p #[strong Timestamp:] #{message.timestamp}
+        

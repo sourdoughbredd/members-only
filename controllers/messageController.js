@@ -3,6 +3,17 @@ const permissions = require("../middleware/permissions");
 const { body, validationResult } = require("express-validator");
 
 const Message = require("../models/message");
+const User = require("../models/user");
+
+// Display Message Board
+exports.messageBoardGet = asyncHandler(async (req, res, next) => {
+  // Get messages
+  const messages = await Message.find({})
+    .sort({ timestamp: -1 })
+    .populate("user")
+    .exec();
+  res.render("message-board", { messages });
+});
 
 // Create Message
 exports.messageCreateGet = [
