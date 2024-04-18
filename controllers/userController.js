@@ -163,7 +163,58 @@ exports.userLoginPost = [
 ];
 
 // LOG OUT
+
 exports.userLogoutGet = asyncHandler((req, res, next) => {
   res.cookie("token", "", { expires: new Date(0) });
   res.redirect("/");
 });
+
+// MEMBERSHIP
+
+exports.userMembershipGet = asyncHandler(async (req, res, next) => {
+  res.render("member-form", {});
+});
+exports.userMembershipPost = [
+  body("key")
+    .trim()
+    .notEmpty()
+    .withMessage("Key is required")
+    .custom((key) => key === process.env.MEMBER_KEY)
+    .withMessage("Incorrect key"),
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req).array();
+
+    if (errors.length > 0) {
+      res.render("member-form", { errors });
+      return;
+    }
+
+    await User.findByIdAndUpdate(req.user._id, { isMember: true });
+    res.redirect("/");
+  }),
+];
+
+// ADMIN
+
+exports.userAdminGet = asyncHandler(async (req, res, next) => {
+  res.render("admin-form", {});
+});
+exports.userAdminPost = [
+  body("key")
+    .trim()
+    .notEmpty()
+    .withMessage("Key is required")
+    .custom((key) => key === process.env.ADMIN_KEY)
+    .withMessage("Incorrect key"),
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req).array();
+
+    if (errors.length > 0) {
+      res.render("admin-form", { errors });
+      return;
+    }
+
+    await User.findByIdAndUpdate(req.user._id, { isAdmin: true });
+    res.redirect("/");
+  }),
+];
