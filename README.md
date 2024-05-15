@@ -10,6 +10,8 @@ This project demonstrates authentication and authorization using Passport.js. Th
 - Only "members" can view the author and timestamp on messages
 - Only "admins" can delete messages.
 
+Additionally, it uses view templates in Pug (formerly Jade) to serve up the web pages and features secure password storage using bcryptJS.
+
 ## Table of Contents
 
 - [Description](#description)
@@ -48,6 +50,7 @@ You can view a live preview of the page [here](https://members-only-bb.fly.dev/m
 
 - User registration and login
 - Authentication by JWT w/ RS256 asymmetric algorithm
+- Conditional rendering using Pug view templates
 - Post creation restricted to authenticated users
 - Timestamp and author viewing restricted to "members"
 - Message deletion restricted to "admins"
