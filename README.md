@@ -85,7 +85,7 @@ You can view a live preview of the page [here](https://members-only-bb.fly.dev/m
 
 ## Usage
 
-1. Register a new user.
+1. Register as a new user.
 2. Log in with your credentials.
 3. Create a post.
 4. Become a member by entering the secret key
